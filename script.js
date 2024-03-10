@@ -91,10 +91,10 @@ function handlePlacement(evt) {
 
 function checkWinner(rowIndex, colIndex) {
     return checkHorizontalWin(rowIndex, colIndex) 
-    || checkVerticalWin(rowIndex, colIndex)
-    || checkNeSwWin(rowIndex, colIndex)
-    || checkNwSeWin(rowIndex, colIndex)
-    || checkTie();
+        || checkVerticalWin(rowIndex, colIndex)
+        || checkNeSwWin(rowIndex, colIndex)
+        || checkNwSeWin(rowIndex, colIndex)
+        || checkTie();
 }
 
 function checkHorizontalWin(rowIndex, colIndex) {

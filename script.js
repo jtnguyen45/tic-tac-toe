@@ -51,7 +51,13 @@ function renderBoard() {
 }
 
 function renderMessage() {
-    //render player turn, win, tie
+    if (winner === "T") {
+        messageEl.innerHTML = "Tie game!";
+    } else if (winner) {
+        messageEl.innerHTML = `${SYMBOL_LOOKUP[winner]} is the winner!`;
+    } else {
+        messageEl.innerHTML = `${SYMBOL_LOOKUP[turn]}'s turn`
+    }
 }
 
 function renderControls() {

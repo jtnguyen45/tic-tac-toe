@@ -11,6 +11,10 @@
 }
 
 body {
+    background-image: url(https://images5.alphacoders.com/132/1327980.png);
+}
+
+div {
     height: 100vh;
     margin: 0;
     font-family: "Madimi One", sans-serif;

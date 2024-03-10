@@ -5,6 +5,11 @@ const SYMBOL_LOOKUP = {
     "null": " ",
 };
 
+const COLOR_LOOKUP = {
+    "1": "--x-color",
+    "-1": "--y-color",
+}
+
 /*----- state variables -----*/
 let board;
 let winner;
@@ -31,6 +36,7 @@ function init() {
 
     winner = null;
     turn = 1;
+    resetBtn.innerHTML = "RESET GAME";
 
     render();
 }
@@ -48,6 +54,7 @@ function renderBoard() {
             const cellElement = document.getElementById(cellId);
 
             cellElement.innerHTML = `${SYMBOL_LOOKUP[cellValue]}`
+            cellElement.style.color = `var(${COLOR_LOOKUP[cellValue]})`;
         });
     });
 }
@@ -55,17 +62,11 @@ function renderBoard() {
 function renderMessage() {
     if (winner === "T") {
         messageEl.innerHTML = "TIE GAME!";
-        disableBoard();
     } else if (winner) {
-        messageEl.innerHTML = `${SYMBOL_LOOKUP[winner]} IS THE WINNER!`;
-        disableBoard();
+        messageEl.innerHTML = `<span style="color:var(${COLOR_LOOKUP[winner]})">${SYMBOL_LOOKUP[winner]}</span> IS THE WINNER!`;
     } else {
-        messageEl.innerHTML = `${SYMBOL_LOOKUP[turn]}'S TURN`
+        messageEl.innerHTML = `<span style="color: var(${COLOR_LOOKUP[turn]})">${SYMBOL_LOOKUP[turn]}</span>'S TURN`
     }
-}
-
-function disableBoard() {
-    document.querySelectorAll("#board > button").disabled = true;
 }
 
 function renderControls() {
@@ -82,16 +83,65 @@ function handlePlacement(evt) {
     if (board[rowIndex][colIndex] !== null || winner) return;
     board[rowIndex][colIndex] = turn;
 
-    //winner = checkWinner(rowIndex, colIndex);
+    winner = checkWinner(rowIndex, colIndex);
 
     turn *= -1;
     render();
 }
 
 function checkWinner(rowIndex, colIndex) {
-    //TODO: checks horizontal
-    //TODO: checks vertical
-    //TODO: checks diagonal pos slope
-    //TODO: checks diagonal neg slope
-    //TODO: checks tie
+    return checkHorizontalWin(rowIndex, colIndex) 
+    || checkVerticalWin(rowIndex, colIndex)
+    || checkNeSwWin(rowIndex, colIndex)
+    || checkNwSeWin(rowIndex, colIndex)
+    || checkTie();
+}
+
+function checkHorizontalWin(rowIndex, colIndex) {
+    const adjCountLeft = checkAdjacent(rowIndex, colIndex, 0, -1);
+    const adjCountRight = checkAdjacent(rowIndex, colIndex, 0, 1);
+    return adjCountLeft + adjCountRight >= 2 ? board[rowIndex][colIndex] : null;
+}
+
+function checkVerticalWin(rowIndex, colIndex) {
+    const adjCountUp = checkAdjacent(rowIndex, colIndex, -1, 0);
+    const adjCountDown = checkAdjacent(rowIndex, colIndex, 1, 0);
+    return adjCountUp + adjCountDown >= 2 ? board[rowIndex][colIndex] : null;
+}
+
+function checkNeSwWin(rowIndex, colIndex) {
+    const adjCountNE = checkAdjacent(rowIndex, colIndex, -1, 1);
+    const adjCountSW = checkAdjacent(rowIndex, colIndex, 1, -1);
+    return adjCountNE + adjCountSW >= 2 ? board[rowIndex][colIndex] : null;
+}
+
+function checkNwSeWin(rowIndex, colIndex) {
+    const adjCountNW = checkAdjacent(rowIndex, colIndex, -1, -1);
+    const adjCountSE = checkAdjacent(rowIndex, colIndex, 1, 1);
+    return adjCountNW + adjCountSE >= 2 ? board[rowIndex][colIndex] : null;
+}
+
+function checkTie() {
+    for (let row = 0; row < 3; row++){
+        for (let col = 0; col < 3; col++){
+            if (board[row][col] === null) return null;
+        }
+    }
+    return "T";
+}
+
+function checkAdjacent(rowIndex, colIndex, rowOffset, colOffset) {
+    let count = 0;
+    const playerValue = board[rowIndex][colIndex];
+
+    rowIndex += rowOffset;
+    colIndex += colOffset;
+    while (rowIndex >= 0 && rowIndex < 3 &&
+           colIndex >= 0 && colIndex < 3 &&
+           board[rowIndex][colIndex] === playerValue) {
+        count++;
+        rowIndex += rowOffset;
+        colIndex += colOffset;
+    }
+    return count;
 }

@@ -6,7 +6,8 @@
 }
 
 :root {
-    --light-pink: #ffe8ec;
+    --x-color: #fad4db;
+    --y-color: #d2facf;
 }
 
 body {
@@ -41,7 +42,7 @@ h1 {
     background-color: white;
     border-color: white;
     font-size: 5vmin;
-    font-family: "Madimi One", sans-serif;
+    font-family: inherit;
 }
 
 #c0r0, #c1r0, #c2r0 {
@@ -62,12 +63,13 @@ h1 {
 
 #resetBtn {
     margin-top: 5vmin;
-    font-size: 2vmin;
+    font-size: 3vmin;
     border-radius: 2vmin;
     border: none;
     padding: 1vmin 2vmin;
     color: black;
     background-color: #ffda8f;
+    font-family: inherit;
 }
 
 #resetBtn:hover {

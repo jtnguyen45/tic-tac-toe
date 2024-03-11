@@ -13,6 +13,7 @@
 body {
     background-image: url(https://images5.alphacoders.com/132/1327980.png);
     animation: fadeIn 1s ease-in both;
+    overflow: hidden;
 }
 
 div {
@@ -28,26 +29,38 @@ div {
 header {
     font-size: 6vmin;
     font-family: "Anta", sans-serif;
+    text-shadow: 2px 2px 5px #615353;
 }
 
 h1 {
-    margin: 2vmin 2vmin 4vmin;
+    margin: 2vmin;
+    font-size: 4.5vmin;
+    text-shadow: 1px 1px 3px #615353;
 }
 
 #board {
     display: grid;
-    grid-template-columns: repeat(3, 15vmin);
-    grid-template-rows: repeat(3, 15vmin);
+    grid-template-columns: repeat(3, 13vmin);
+    grid-template-rows: repeat(3, 13vmin);
     gap: 1vmin;
-    background-color: grey;
+    background-color: #f9b699;
     margin: 2vmin;
+    border-radius: 2vmin;
+    padding: 3.5vmin;
+    box-shadow: 1vmin 1vmin 1vmin #6f6f6f;
 }
 
 #board > button {
     background-color: white;
     border-color: white;
+    border-radius: 0.5vmin;
     font-size: 5vmin;
     font-family: inherit;
+}
+
+#board > button:hover {
+    background-color: #fff8ef;
+    border-color: #fff8ef;
 }
 
 #c0r0, #c1r0, #c2r0 {
@@ -75,6 +88,7 @@ h1 {
     color: black;
     background-color: #ffda8f;
     font-family: inherit;
+    box-shadow: 1vmin 1vmin 1vmin #6f6f6f;
 }
 
 #resetBtn:hover {
